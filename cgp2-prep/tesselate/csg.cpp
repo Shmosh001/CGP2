@@ -126,7 +126,7 @@ void Scene::clear()
 
     // TODO HERE, code to walk csg tree and deallocate nodes
     // will require dynamic casting of SceneNode pointers
-    if(OpNode* oNode = dynamic_cast<OpNode*>(node))
+    if(OpNode* oNode = dynamic_cast<OpNode*>(csgroot))
     {
         delete oNode->left;
         delete oNode->right;
@@ -148,6 +148,21 @@ bool Scene::bindGeometry(View * view, ShapeDrawData &sdd)
 void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
 {
     // TODO needs completing
+    if(op == UNION)
+    {
+        
+    }
+
+    else if(op == INTERSECTION)
+    {
+
+    }
+
+    else if(op == DIFFERENCE)
+    {
+
+    }
+
 }
 
 void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)

@@ -38,7 +38,26 @@ void Sphere::genGeometry(ShapeGeometry * geom, View * view)
 bool Sphere::pointContainment(cgp::Point pnt)
 {
     // TODO needs completing
-    return true;
+    //boundary values for sphere
+    float minX = c.x - r;
+    float maxX = c.x + r;
+
+    float minY = c.y - r;
+    float maxY = c.y + r;
+
+    float minZ = c.z - r;
+    float maxZ = c.z + r;
+
+    if(pnt.x > minX && pnt.x < maxX && pnt.y > minY && pnt.y < maxY && pnt.z > minZ && pnt.z < maxZ)
+    {
+        return true;
+    }
+
+    else
+    {
+        return true;
+    }
+
 }
 
 void Cylinder::genGeometry(ShapeGeometry * geom, View * view)
