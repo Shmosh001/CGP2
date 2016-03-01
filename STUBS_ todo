@@ -1,0 +1,15 @@
+Mesh.cpp:
+ - pointContainment(cgp::Point pnt)
+
+Voxels.cpp:
+ - fill(bool setval)
+ - setDim(int &dimx, int &dimy, int &dimz)
+ - set(int x, int y, int z, bool setval)
+ - get(int x, int y, int z)
+
+csg.cpp:
+ - genVizRender(View * view, ShapeDrawData &sdd)
+ - clear()
+ - voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
+ - voxWalk(SceneNode *root, VoxelVolume *voxels)
+
