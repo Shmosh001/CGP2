@@ -42,7 +42,7 @@ void VoxelVolume::clear()
 void VoxelVolume::fill(bool setval)
 {
     // TODO  needs completing
-    int size = xdim + ydim + zdim;
+    int size = xdim * ydim * zdim;
     if(setval == true)
     {
       for (int i = 0; i < size; i++)
@@ -75,12 +75,13 @@ void VoxelVolume::getDim(int &dimx, int &dimy, int &dimz)
 
 void VoxelVolume::setDim(int &dimx, int &dimy, int &dimz)
 {
+    xdim = dimx;
+    ydim = dimy;
+    zdim = dimz;
     // TODO needs completing
-    int size = dimx + dimy + dimz;
-    for (int i = 0; i < size; i++)
-    {
-        *(voxgrid + i) = 0;
-    }
+    int size = dimx * dimy * dimz;
+    voxgrid = new int [size];
+    
 
     calcCellDiag();
 }
@@ -101,7 +102,7 @@ void VoxelVolume::setFrame(cgp::Point corner, cgp::Vector diag)
 bool VoxelVolume::set(int x, int y, int z, bool setval)
 {
     // TODO needs completing
-    int position = x + y + z;
+    int position = x + ydim * (y + zdim * z);
     if(setval == true)
     {
         *(voxgrid + position) = 1;
@@ -118,7 +119,7 @@ bool VoxelVolume::set(int x, int y, int z, bool setval)
 bool VoxelVolume::get(int x, int y, int z)
 {
     // TODO needs completing
-    int position = x + y + z;
+    int position = x + ydim * (y + zdim * z);
     int value = *(voxgrid + position);
     if(value == 1)
     {

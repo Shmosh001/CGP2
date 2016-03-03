@@ -148,19 +148,94 @@ bool Scene::bindGeometry(View * view, ShapeDrawData &sdd)
 void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
 {
     // TODO needs completing
-    if(op == UNION)
+    int dimX, dimY, dimZ;
+    //get dimensions of voxelVolumes
+    leftarg->getDim(dimX, dimY, dimZ); 
+
+    //int size = dimX * dimY * dimZ;   
+
+    //UNION Operation
+    if(op == SetOp::UNION)
     {
-        
+        //get x,y,z postion for voxel get & set method
+        for (int x = 0; x < dimX; ++x)
+        {
+            for (int y = 0; x < dimY; ++y)
+            {
+                for (int z = 0; z < dimZ; ++z)
+                {
+                    if(leftarg->get(x,y,z) == 1 || rightarg->get(x,y,z) == 1)
+                    {
+                        leftarg->set(x,y,z,true);
+                    }
+                }    
+            }       
+        }        
     }
 
-    else if(op == INTERSECTION)
+    //INTERSECTION Operation
+    else if(op == SetOp::INTERSECTION)
     {
-
+        //get x,y,z postion for voxel get & set method
+        for (int x = 0; x < dimX; ++x)
+        {
+            for (int y = 0; x < dimY; ++y)
+            {
+                for (int z = 0; z < dimZ; ++z)
+                {
+                    //if either voxels are false, then set leftarg voxel at postion x,y,z to false
+                    if(leftarg->get(x,y,z) != 1 || rightarg->get(x,y,z) != 1)
+                    {
+                        leftarg->set(x,y,z,true);
+                    }
+                }    
+            }       
+        }
     }
 
-    else if(op == DIFFERENCE)
+    //DIFFERENCE Operation
+    else if(op == SetOp::DIFFERENCE)
     {
+        //get x,y,z postion for voxel get & set method
+        for (int x = 0; x < dimX; ++x)
+        {
+            for (int y = 0; x < dimY; ++y)
+            {
+                for (int z = 0; z < dimZ; ++z)
+                {
+                    int lVal, rVal;
+                    if(leftarg->get(x,y,z) == 1)
+                    {
+                        lVal = 1;
+                    }
 
+                    else
+                    {
+                        lVal = 0;
+                    }
+
+                    if(rightarg->get(x,y,z) == 1)
+                    {
+                        rVal = 1;
+                    }
+
+                    else
+                    {
+                        lVal = 0;
+                    }
+
+                    int dif = lVal - rVal;
+                    //make sure the difference is not less than 0. set to 0 otherwise
+                    if(dif < 0)
+                    {
+                        dif = 0;
+                    }
+
+                    leftarg->set(x,y,z,dif);
+                    
+                }    
+            }       
+        }
     }
 
 }
@@ -169,6 +244,36 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
 {
     // TODO needs completing
     // will require dynamic casting of SceneNode pointers
+    if(ShapeNode* sNode = dynamic_cast<ShapeNode*>(root))
+    {
+        int dimX, dimY, dimZ;
+        //get dimensions of voxelVolumes
+        voxels->getDim(dimX, dimY, dimZ);
+        for (int x = 0; x < dimX; ++x)
+        {
+            for (int y = 0; y < dimY; ++y)
+            {
+                for (int z = 0; z < dimZ; ++z)
+                {                    
+                    cgp::Point worldPos = voxels->getVoxelPos(x, y, z);
+                    if(sNode->shape->pointContainment(worldPos))
+                    {
+                        voxels->set(x,y,z,true);
+                    }
+                }
+            }
+        }
+        
+
+
+    }
+
+    else if(OpNode* oNode = dynamic_cast<OpNode*>(root))
+    {
+        voxWalk(oNode->left, voxels);
+        voxWalk(oNode->right, voxels);
+    }
+
 }
 
 void Scene::voxelise(float voxlen)
