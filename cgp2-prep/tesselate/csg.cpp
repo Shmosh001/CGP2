@@ -160,7 +160,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
-            for (int y = 0; x < dimY; ++y)
+            for (int y = 0; y < dimY; ++y)
             {
                 for (int z = 0; z < dimZ; ++z)
                 {
@@ -179,7 +179,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
-            for (int y = 0; x < dimY; ++y)
+            for (int y = 0; y < dimY; ++y)
             {
                 for (int z = 0; z < dimZ; ++z)
                 {
@@ -199,7 +199,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
-            for (int y = 0; x < dimY; ++y)
+            for (int y = 0; y < dimY; ++y)
             {
                 for (int z = 0; z < dimZ; ++z)
                 {
@@ -274,6 +274,13 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
         //create empty voxel for right
         VoxelVolume rightVoxels;
         rightVoxels.setDim(dimX, dimY, dimZ);
+        cgp::Point corner;
+        cgp::Vector diag;
+        voxels->getFrame(corner, diag);
+        rightVoxels.setFrame(corner, diag);
+
+
+
         //recursive call for each child node
         voxWalk(oNode->left, voxels);
         voxWalk(oNode->right, &rightVoxels);
