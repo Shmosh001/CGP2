@@ -103,17 +103,25 @@ bool VoxelVolume::set(int x, int y, int z, bool setval)
 {
     // TODO needs completing
     int position = x + xdim + ydim * (y + zdim * z);
-    if(setval == true)
+    if(x < 0 || x > xdim || y < 0 || y > ydim || z < 0 || z > zdim)
     {
-        *(voxgrid + position) = 1;
+        return false;
     }
-
     else
     {
-        *(voxgrid + position) = 0;
-    }
+        if(setval == true)
+        {
+            *(voxgrid + position) = 1;
+        }
 
-    return true;
+        else
+        {
+            *(voxgrid + position) = 0;
+        }
+
+        return true;   
+    }
+    
 }
 
 bool VoxelVolume::get(int x, int y, int z)
