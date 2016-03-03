@@ -224,7 +224,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
 
                     else
                     {
-                        lVal = 0;
+                        rVal = 0;
                     }
 
                     int dif = lVal - rVal;
