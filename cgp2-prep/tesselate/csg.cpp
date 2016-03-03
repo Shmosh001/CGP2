@@ -157,6 +157,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
     //UNION Operation
     if(op == SetOp::UNION)
     {
+        cerr << "UNION" << endl;
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
@@ -176,6 +177,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
     //INTERSECTION Operation
     else if(op == SetOp::INTERSECTION)
     {
+        cerr << "INTERSECTION" << endl;
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
@@ -196,6 +198,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
     //DIFFERENCE Operation
     else if(op == SetOp::DIFFERENCE)
     {
+        cerr << "DIFFERENCE" << endl;
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
@@ -204,7 +207,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
                 for (int z = 0; z < dimZ; ++z)
                 {
                     int lVal, rVal;
-                    if(leftarg->get(x,y,z) == 1)
+                    if(leftarg->get(x,y,z) == true)
                     {
                         lVal = 1;
                     }
@@ -214,7 +217,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
                         lVal = 0;
                     }
 
-                    if(rightarg->get(x,y,z) == 1)
+                    if(rightarg->get(x,y,z) == true)
                     {
                         rVal = 1;
                     }
@@ -230,7 +233,7 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
                     {
                         dif = 0;
                     }
-
+                                        
                     leftarg->set(x,y,z,dif);
                     
                 }    
@@ -257,10 +260,8 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
                 for (int z = 0; z < dimZ; ++z)
                 {                    
                     cgp::Point worldPos = voxels->getVoxelPos(x, y, z);
-                    if(sNode->shape->pointContainment(worldPos))
-                    {
-                        voxels->set(x,y,z,true);
-                    }
+                    voxels->set(x, y, z, sNode->shape->pointContainment(worldPos));
+                    
                 }
             }
         }
