@@ -210,20 +210,6 @@ string
 glm/glm.hpp
 -
 
-/home/osher/Dropbox/Work/CGP/Assignments/CGP2/cgp2-prep/tesselate/voxels.cpp
-voxels.h
-/home/osher/Dropbox/Work/CGP/Assignments/CGP2/cgp2-prep/tesselate/voxels.h
-stdio.h
--
-math.h
--
-string.h
--
-iostream
--
-limits
--
-
 /home/osher/Dropbox/Work/CGP/Assignments/CGP2/cgp2-prep/tesselate/voxels.h
 vector
 -

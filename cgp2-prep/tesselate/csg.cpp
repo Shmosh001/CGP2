@@ -244,12 +244,12 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
 {
     // TODO needs completing
     // will require dynamic casting of SceneNode pointers
-    int dimX, dimY, dimZ;
-    //get dimensions of voxelVolumes
-    voxels->getDim(dimX, dimY, dimZ);
+    
     if(ShapeNode* sNode = dynamic_cast<ShapeNode*>(root))
     {
-        
+        int dimX, dimY, dimZ;
+        //get dimensions of voxelVolumes
+        voxels->getDim(dimX, dimY, dimZ);   
         for (int x = 0; x < dimX; ++x)
         {
             for (int y = 0; y < dimY; ++y)
@@ -273,19 +273,19 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
     {
         
 
-
-
         //recursive call for each child node
         voxWalk(oNode->left, voxels);
 
+        int dimX, dimY, dimZ;
+        //get dimensions of voxelVolumes
+        voxels->getDim(dimX, dimY, dimZ);
+
         //create empty voxel for right
-        VoxelVolume * rightVoxels;
-        rightVoxels->setDim(dimX, dimY, dimZ);
         cgp::Point corner;
         cgp::Vector diag;
         voxels->getFrame(corner, diag);
-        rightVoxels->setFrame(corner, diag);
-        
+        VoxelVolume * rightVoxels = new VoxelVolume(dimX, dimY, dimZ, corner, diag);
+
         voxWalk(oNode->right, rightVoxels);
         //call operation
         voxSetOp(oNode->op, voxels, rightVoxels);
