@@ -102,7 +102,7 @@ void VoxelVolume::setFrame(cgp::Point corner, cgp::Vector diag)
 bool VoxelVolume::set(int x, int y, int z, bool setval)
 {
     // TODO needs completing
-    int position = x + ydim * (y + zdim * z);
+    int position = x + xdim + ydim * (y + zdim * z);
     if(setval == true)
     {
         *(voxgrid + position) = 1;
@@ -119,7 +119,7 @@ bool VoxelVolume::set(int x, int y, int z, bool setval)
 bool VoxelVolume::get(int x, int y, int z)
 {
     // TODO needs completing
-    int position = x + ydim * (y + zdim * z);
+    int position = x + xdim +ydim * (y + zdim * z);
     int value = *(voxgrid + position);
     if(value == 1)
     {
