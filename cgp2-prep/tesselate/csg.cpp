@@ -150,14 +150,11 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
     // TODO needs completing
     int dimX, dimY, dimZ;
     //get dimensions of voxelVolumes
-    leftarg->getDim(dimX, dimY, dimZ); 
-
-    //int size = dimX * dimY * dimZ;   
+    leftarg->getDim(dimX, dimY, dimZ);
 
     //UNION Operation
     if(op == SetOp::UNION)
     {
-        cerr << "UNION" << endl;
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
@@ -177,7 +174,6 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
     //INTERSECTION Operation
     else if(op == SetOp::INTERSECTION)
     {
-        cerr << "INTERSECTION" << endl;
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
@@ -198,7 +194,6 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
     //DIFFERENCE Operation
     else if(op == SetOp::DIFFERENCE)
     {
-        cerr << "DIFFERENCE" << endl;
         //get x,y,z postion for voxel get & set method
         for (int x = 0; x < dimX; ++x)
         {
@@ -228,6 +223,10 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
                     }
 
                     int dif = lVal - rVal;
+                    if(dif == 0)
+                    {
+                        cerr << "Dif 0" << endl;
+                    }
                     //make sure the difference is not less than 0. set to 0 otherwise
                     if(dif < 0)
                     {
@@ -290,6 +289,7 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
         voxWalk(oNode->right, rightVoxels);
         //call operation
         voxSetOp(oNode->op, voxels, rightVoxels);
+        delete rightVoxels;
 
 
     }

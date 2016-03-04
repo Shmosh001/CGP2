@@ -48,14 +48,14 @@ bool Sphere::pointContainment(cgp::Point pnt)
     float minZ = c.z - r;
     float maxZ = c.z + r;
 
-    if(pnt.x > minX && pnt.x < maxX && pnt.y > minY && pnt.y < maxY && pnt.z > minZ && pnt.z < maxZ)
+    if(pnt.x >= minX && pnt.x <= maxX && pnt.y >= minY && pnt.y <= maxY && pnt.z >= minZ && pnt.z <= maxZ)
     {
         return true;
     }
 
     else
     {
-        return true;
+        return false;
     }
 
 }
