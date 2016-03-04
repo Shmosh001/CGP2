@@ -280,7 +280,7 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
         cgp::Point corner;
         cgp::Vector diag;
         voxels->getFrame(corner, diag);
-        VoxelVolume * rightVoxels = new VoxelVolume(dimX, dimY, dimZ, corner, diag);
+        VoxelVolume* rightVoxels = new VoxelVolume(dimX, dimY, dimZ, corner, diag);
 
         voxWalk(oNode->right, rightVoxels);
         //call operation
