@@ -223,10 +223,6 @@ void Scene::voxSetOp(SetOp op, VoxelVolume *leftarg, VoxelVolume *rightarg)
                     }
 
                     int dif = lVal - rVal;
-                    if(dif == 0)
-                    {
-                        cerr << "Dif 0" << endl;
-                    }
                     //make sure the difference is not less than 0. set to 0 otherwise
                     if(dif < 0)
                     {
