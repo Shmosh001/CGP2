@@ -43,7 +43,7 @@ void VoxelVolume::fill(bool setval)
 {
     // TODO  needs completing
     int dimensions = xdim * ydim * zdim;
-    int size = (int) ceil(dimensions / 32);
+    int size = (int) ceil(dimensions / sizeof (unsigned int));
     if(setval == true)
     {
       for (int i = 0; i < size; i++)
@@ -81,7 +81,7 @@ void VoxelVolume::setDim(int &dimx, int &dimy, int &dimz)
     zdim = dimz;
     // TODO needs completing
     int dimensions = dimx * dimy * dimz;
-    int size = (int) ceil(dimensions / 32);
+    int size = (int) ceil(dimensions / sizeof (unsigned int));
     voxgrid = new unsigned int [size];
     
 
@@ -105,7 +105,7 @@ bool VoxelVolume::set(int x, int y, int z, bool setval)
 {
     // TODO needs completing
     int position = x + xdim + ydim * (y + zdim * z);
-    int pos = (int) ceil(position / 32);
+    int pos = (int) ceil(position / sizeof (unsigned int));
     if(x < 0 || x > xdim || y < 0 || y > ydim || z < 0 || z > zdim)
     {
         return false;
@@ -115,13 +115,13 @@ bool VoxelVolume::set(int x, int y, int z, bool setval)
     {
         if(setval == true)
         {
-            *(voxgrid + pos) |= 1u << position % 32;
+            *(voxgrid + pos) |= 1U << position % sizeof (unsigned int);
 
         }
 
         else
         {
-            *(voxgrid + pos) &= ~(1u << position % 32);
+            *(voxgrid + pos) &= ~(1U << position % sizeof (unsigned int));
         }
 
         return true;   
@@ -133,9 +133,9 @@ bool VoxelVolume::get(int x, int y, int z)
 {
     // TODO needs completing
     int position = x + xdim + ydim * (y + zdim * z);
-    int pos = (int) ceil(position / 32);
+    int pos = (int) ceil(position / sizeof (unsigned int));
     //int value = (*(voxgrid + pos) >> position % 32) & 1;
-    unsigned int tempValue = voxgrid[pos] & (1u << position % 32);
+    unsigned int tempValue = voxgrid[pos] & (1U << position % sizeof (unsigned int));
     if(tempValue == 1)
     {
         return true;
