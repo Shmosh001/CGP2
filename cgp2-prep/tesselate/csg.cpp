@@ -261,8 +261,6 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
             }
         }
         
-
-
     }
 
     else if(OpNode* oNode = dynamic_cast<OpNode*>(root))
@@ -285,9 +283,7 @@ void Scene::voxWalk(SceneNode *root, VoxelVolume *voxels)
         voxWalk(oNode->right, rightVoxels);
         //call operation
         voxSetOp(oNode->op, voxels, rightVoxels);
-        delete rightVoxels;
-
-
+        //delete rightVoxels;
     }
 
 }

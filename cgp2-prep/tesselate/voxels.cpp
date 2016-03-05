@@ -42,12 +42,13 @@ void VoxelVolume::clear()
 void VoxelVolume::fill(bool setval)
 {
     // TODO  needs completing
-    int size = xdim * ydim * zdim;
+    int dimensions = xdim * ydim * zdim;
+    int size = (int) ceil(dimensions / 32);
     if(setval == true)
     {
       for (int i = 0; i < size; i++)
       {
-          *(voxgrid + i) = 1;
+          *(voxgrid + i) = ~0;
       }
     }
 
@@ -79,8 +80,9 @@ void VoxelVolume::setDim(int &dimx, int &dimy, int &dimz)
     ydim = dimy;
     zdim = dimz;
     // TODO needs completing
-    int size = dimx * dimy * dimz;
-    voxgrid = new int [size];
+    int dimensions = dimx * dimy * dimz;
+    int size = (int) ceil(dimensions / 32);
+    voxgrid = new unsigned int [size];
     
 
     calcCellDiag();
@@ -103,20 +105,23 @@ bool VoxelVolume::set(int x, int y, int z, bool setval)
 {
     // TODO needs completing
     int position = x + xdim + ydim * (y + zdim * z);
+    int pos = (int) ceil(position / 32);
     if(x < 0 || x > xdim || y < 0 || y > ydim || z < 0 || z > zdim)
     {
         return false;
     }
+
     else
     {
         if(setval == true)
         {
-            *(voxgrid + position) = 1;
+            *(voxgrid + pos) |= 1u << position % 32;
+
         }
 
         else
         {
-            *(voxgrid + position) = 0;
+            *(voxgrid + pos) &= ~(1u << position % 32);
         }
 
         return true;   
@@ -128,8 +133,10 @@ bool VoxelVolume::get(int x, int y, int z)
 {
     // TODO needs completing
     int position = x + xdim + ydim * (y + zdim * z);
-    int value = *(voxgrid + position);
-    if(value == 1)
+    int pos = (int) ceil(position / 32);
+    //int value = (*(voxgrid + pos) >> position % 32) & 1;
+    unsigned int tempValue = voxgrid[pos] & (1u << position % 32);
+    if(tempValue == 1)
     {
         return true;
     }

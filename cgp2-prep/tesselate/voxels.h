@@ -18,7 +18,8 @@
 class VoxelVolume
 {
 private:
-    int * voxgrid;  ///< flattened voxel volume, bit packed to save memory
+    //int * voxgrid;  ///< flattened voxel volume, bit packed to save memory
+    unsigned int * voxgrid;  ///< flattened voxel volume, bit packed to save memory
     int xdim;       ///< number of voxels in x dimension
     int ydim;       ///< number of voxels in y dimension
     int zdim;       ///< number of voxels in z dimension
